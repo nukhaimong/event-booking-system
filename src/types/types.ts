@@ -11,3 +11,14 @@ export interface Event {
   created_at: string;
   photo_url: string;
 }
+
+export interface Booking {
+  id: number;
+  user_id: number;
+  event_id: number;
+  quantity: number;
+  total_price: number;
+  status: string;
+  booking_code: string;
+  created_at: string;
+}

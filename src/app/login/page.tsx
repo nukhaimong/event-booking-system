@@ -1,9 +1,9 @@
-import LoginForm from '@/components/ui/auth/loginForm'
+import LoginForm from '@/components/auth/loginForm'
 
-const page = () => {
+const LoginPage = () => {
   return (
     <LoginForm />
   )
 }
 
-export default page
+export default LoginPage

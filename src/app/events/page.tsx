@@ -1,12 +1,11 @@
-import EventCard from '@/components/ui/event/eventCard';
+import EventCard from '@/components/event/eventCard';
 import { eventService } from '@/service/event/eventService';
 import { Event } from '@/types/types';
 
 
 
-const Page = async () => {
+const EventPage = async () => {
   const events : Event[]= await eventService.getEvents();
-  console.log(events);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -27,4 +26,4 @@ const Page = async () => {
   );
 };
 
-export default Page;
+export default EventPage;

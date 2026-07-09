@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-const BASE_API = process.env.BASE_API
+const NEXT_PUBLIC_BASE_API = process.env.NEXT_PUBLIC_BASE_API
 
 interface LoginPayload {
   email: string;
@@ -15,7 +15,7 @@ interface RegisterPayload {
 export const authService = {
   login: async (Payload: LoginPayload) => {
     try {
-      const response = await fetch(`${BASE_API}/auth/login`, {
+      const response = await fetch(`${NEXT_PUBLIC_BASE_API}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ export const authService = {
   },
   signup: async (Payload: RegisterPayload) => {
     try {
-      const response = await fetch(`${BASE_API}/auth/register`, {
+      const response = await fetch(`${NEXT_PUBLIC_BASE_API}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
