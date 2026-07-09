@@ -45,6 +45,8 @@ export default function SignupForm() {
           return;
         }
         toast.success('Account created successfully', { id: toastId });
+         router.refresh();
+        router.push('/');
       } catch (error) {
         console.log('Internal Server Error: ', error);
       }
