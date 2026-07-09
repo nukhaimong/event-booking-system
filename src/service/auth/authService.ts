@@ -1,5 +1,7 @@
 import Cookies from 'js-cookie'
 
+const BASE_API = process.env.BASE_API
+
 interface LoginPayload {
   email: string;
   password: string;
@@ -13,7 +15,7 @@ interface RegisterPayload {
 export const authService = {
   login: async (Payload: LoginPayload) => {
     try {
-      const response = await fetch("http://localhost:8080/api/v1/auth/login", {
+      const response = await fetch(`${BASE_API}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -42,7 +44,7 @@ export const authService = {
   },
   signup: async (Payload: RegisterPayload) => {
     try {
-      const response = await fetch("http://localhost:8080/api/v1/auth/register", {
+      const response = await fetch(`${BASE_API}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -55,7 +57,7 @@ export const authService = {
       if(!response.ok) {
         return {error: {message: result.message || "Signup Failed"}}
       }
-      
+
       if (response.ok && result.token) {
         Cookies.set("token", result.token, {
           expires: 1,
