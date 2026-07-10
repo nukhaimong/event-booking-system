@@ -22,3 +22,20 @@ export interface Booking {
   booking_code: string;
   created_at: string;
 }
+
+
+export interface CreateBookingPayload {
+  event_id: string;
+  quantity: string;
+}
+
+
+export interface CreateEventPayload {
+title: string;
+description: string;
+location: string;
+starts_at: string
+total_tickets: number;
+price: number;
+photo: File
+}
