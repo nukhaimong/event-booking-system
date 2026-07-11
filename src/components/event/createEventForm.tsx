@@ -23,10 +23,7 @@ const createEventSchema = z.object({
     .string()
     .min(2, 'Title must be at least 2 characters')
     .max(150, 'Title too long'),
-  description: z
-    .string()
-    .min(1, 'Description is required')
-    .max(1000, 'Description too long'),
+  description: z.string().min(1, 'Description is required'),
   location: z.string().min(1, 'Location is required'),
   startsAt: z
     .string()

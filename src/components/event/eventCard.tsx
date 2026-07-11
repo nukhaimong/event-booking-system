@@ -5,7 +5,23 @@ import Image from 'next/image';
 import { Calendar, MapPin, Ticket, DollarSign } from 'lucide-react';
 import { Event } from '@/types/types';
 
-export default function EventCard({event}: {event: Event}) {
+export default function EventCard({ event }: { event: Event }) {
+  // Format the date with proper timezone handling
+  const formatEventTime = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+      timeZone: 'Asia/Dhaka', // Bangladesh timezone
+    });
+  };
+  console.log(formatEventTime('2026-11-12T04:00:00+06:00'));
+
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col">
       {/* Event Image */}
@@ -15,7 +31,7 @@ export default function EventCard({event}: {event: Event}) {
             src={event.photo_url}
             alt={event.title}
             fill
-            className="object-center"
+            className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority={false}
           />
@@ -41,27 +57,19 @@ export default function EventCard({event}: {event: Event}) {
           </div>
           <div className="flex items-center text-sm text-gray-600">
             <Calendar className="w-4 h-4 mr-2 flex-shrink-0" />
-            <span>
-              {new Date(event.starts_at).toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-              })}
-            </span>
+            <span>{formatEventTime(event.starts_at)}</span>
           </div>
           <div className="flex items-center text-sm text-gray-600">
             <Ticket className="w-4 h-4 mr-2 flex-shrink-0" />
             <span>
-              {event.available_tickets} / {event.total_tickets} tickets available
+              {event.available_tickets} / {event.total_tickets} tickets
+              available
             </span>
           </div>
           <div className="flex items-center text-sm text-gray-600">
             <DollarSign className="w-4 h-4 mr-2 flex-shrink-0" />
             <span className="font-semibold text-lg text-green-600">
-              ${event.price}
+              {event.price === 0 ? 'Free' : `$${event.price}`}
             </span>
           </div>
         </div>
