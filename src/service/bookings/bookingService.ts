@@ -54,4 +54,29 @@ export const bookingService = {
       throw error;
     }
   },
+  getBookingById: async (bookingId: string) => {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('token')?.value;
+    try {
+      const response = await fetch(`${BASE_API}/bookings/${bookingId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        cache: 'no-store',
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        return {
+          error: { message: result.message || 'Failed to fetch booking' },
+        };
+      }
+      return result;
+    } catch (error) {
+      console.log('Failed to fetch booking: ', error);
+    }
+  },
 };

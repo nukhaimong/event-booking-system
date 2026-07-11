@@ -89,7 +89,7 @@ export default function EventCard({ event }: { event: Event }) {
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-3 mt-auto">
           <Link
-            href={`/events/${event.id}/book`}
+            href={`/events/${event.id}`}
             className={`flex-1 text-center px-4 py-2 rounded-lg font-medium transition-colors ${
               event.available_tickets > 0
                 ? 'bg-blue-600 text-white hover:bg-blue-700'
