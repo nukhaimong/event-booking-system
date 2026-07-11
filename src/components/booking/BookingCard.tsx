@@ -1,10 +1,17 @@
 'use client';
 
 import Link from 'next/link';
-import { Calendar, Ticket, DollarSign, Hash, User, CheckCircle, XCircle, Clock } from 'lucide-react';
+import {
+  Calendar,
+  Ticket,
+  DollarSign,
+  Hash,
+  User,
+  CheckCircle,
+  XCircle,
+  Clock,
+} from 'lucide-react';
 import { Booking } from '@/types/types';
-
-
 
 interface BookingCardProps {
   booking: Booking;
@@ -17,25 +24,25 @@ export default function BookingCard({ booking }: BookingCardProps) {
         return {
           color: 'bg-green-100 text-green-800',
           icon: <CheckCircle className="w-4 h-4 mr-1" />,
-          label: 'Confirmed'
+          label: 'Confirmed',
         };
       case 'pending':
         return {
           color: 'bg-yellow-100 text-yellow-800',
           icon: <Clock className="w-4 h-4 mr-1" />,
-          label: 'Pending'
+          label: 'Pending',
         };
       case 'cancelled':
         return {
           color: 'bg-red-100 text-red-800',
           icon: <XCircle className="w-4 h-4 mr-1" />,
-          label: 'Cancelled'
+          label: 'Cancelled',
         };
       default:
         return {
           color: 'bg-gray-100 text-gray-800',
           icon: null,
-          label: status
+          label: status,
         };
     }
   };
@@ -53,7 +60,9 @@ export default function BookingCard({ booking }: BookingCardProps) {
               {booking.booking_code}
             </span>
           </div>
-          <div className={`flex items-center px-3 py-1 rounded-full text-xs font-medium ${statusInfo.color}`}>
+          <div
+            className={`flex items-center px-3 py-1 rounded-full text-xs font-medium ${statusInfo.color}`}
+          >
             {statusInfo.icon}
             {statusInfo.label}
           </div>
@@ -64,12 +73,13 @@ export default function BookingCard({ booking }: BookingCardProps) {
           <div className="flex items-center text-sm text-gray-600">
             <Calendar className="w-4 h-4 mr-2 flex-shrink-0" />
             <span>
-              Booked on: {new Date(booking.created_at).toLocaleDateString('en-US', {
+              Booked on:{' '}
+              {new Date(booking.created_at).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
                 hour: '2-digit',
-                minute: '2-digit'
+                minute: '2-digit',
               })}
             </span>
           </div>
@@ -87,7 +97,8 @@ export default function BookingCard({ booking }: BookingCardProps) {
               ${booking.total_price.toFixed(2)}
             </span>
             <span className="text-gray-400 text-sm ml-2">
-              (${(booking.total_price / booking.quantity).toFixed(2)} per ticket)
+              (${(booking.total_price / booking.quantity).toFixed(2)} per
+              ticket)
             </span>
           </div>
 

@@ -27,7 +27,7 @@ export const eventService = {
     const cookieStore = await cookies();
     const token = cookieStore.get('token')?.value;
     try {
-      const response = await fetch(`${BASE_API}/events`, {
+      const response = await fetch(`${BASE_API}/events/create`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
