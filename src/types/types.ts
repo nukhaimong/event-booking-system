@@ -25,8 +25,8 @@ export interface Booking {
 
 
 export interface CreateBookingPayload {
-  event_id: string;
-  quantity: string;
+  event_id: number;
+  quantity: number;
 }
 
 

@@ -72,4 +72,25 @@ export const eventService = {
       throw error;
     }
   },
+  getEventById: async (eventId: string) => {
+    const cookieStore = await cookies()
+    const token = cookieStore.get('token')?.value
+    try {
+      const response = await fetch(`${BASE_API}/events/${eventId}`, {
+        method: 'GET', 
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        cache: 'no-store'
+      })
+      const result = await response.json()
+      if (!response.ok) {
+        return {error: {message: result.message || "Failed to fetch event"}}
+      }
+      return result
+    } catch (error) {
+      console.log('Failed to fetch event', error)
+    }
+  }
 };

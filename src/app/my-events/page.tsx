@@ -1,7 +1,6 @@
 import EventCard from '@/components/event/eventCard';
 import { eventService } from '@/service/event/eventService';
 import { Event } from '@/types/types';
-import React from 'react';
 
 const MyEvents = async () => {
   try {

@@ -20,7 +20,6 @@ export default function EventCard({ event }: { event: Event }) {
       timeZone: 'Asia/Dhaka', // Bangladesh timezone
     });
   };
-  console.log(formatEventTime('2026-11-12T04:00:00+06:00'));
 
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col">
