@@ -51,7 +51,7 @@ export const eventService = {
     const token = cookieStore.get('token')?.value;
 
     try {
-      const response = await fetch(`${BASE_API}/events`, {
+      const response = await fetch(`${BASE_API}/events/my-events`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -1,0 +1,59 @@
+import EventCard from '@/components/event/eventCard';
+import { eventService } from '@/service/event/eventService';
+import { Event } from '@/types/types';
+import React from 'react';
+
+const MyEvents = async () => {
+  try {
+    const response = await eventService.getMyEvents();
+    
+    // Check if response has error
+    if (response?.error) {
+      return (
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center py-12">
+            <p className="text-red-500 text-lg">{response.error.message || 'Failed to load events'}</p>
+          </div>
+        </div>
+      );
+    }
+
+    // Response is the events array
+    const events: Event[] = response || [];
+
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-8">My Events</h1>
+        
+        {events.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-lg">You haven't created any events yet.</p>
+            <a 
+              href="/create-event" 
+              className="inline-block mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Create Your First Event
+            </a>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {events.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  } catch (error) {
+    console.error('Error fetching my events:', error);
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center py-12">
+          <p className="text-red-500 text-lg">Something went wrong. Please try again later.</p>
+        </div>
+      </div>
+    );
+  }
+};
+
+export default MyEvents;
