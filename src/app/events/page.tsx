@@ -2,10 +2,8 @@ import EventCard from '@/components/event/eventCard';
 import { eventService } from '@/service/event/eventService';
 import { Event } from '@/types/types';
 
-
-
 const EventPage = async () => {
-  const events : Event[]= await eventService.getEvents();
+  const events: Event[] = await eventService.getEvents();
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -13,11 +11,13 @@ const EventPage = async () => {
 
       {!events || events.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No events available at the moment.</p>
+          <p className="text-gray-500 text-lg">
+            No events available at the moment.
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event) => (
+          {events?.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
         </div>

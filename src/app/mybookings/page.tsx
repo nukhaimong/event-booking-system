@@ -1,18 +1,29 @@
 import BookingCard from '@/components/booking/BookingCard';
+import Unauthorize from '@/components/ui/unauthorize';
 import { bookingService } from '@/service/bookings/bookingService';
 import { Booking } from '@/types/types';
-import { Calendar, Ticket, DollarSign, CheckCircle, Clock, XCircle } from 'lucide-react';
+import { Ticket, CheckCircle, Clock, XCircle } from 'lucide-react';
 import Link from 'next/link';
-
-
+import { toast } from 'sonner';
 
 const MyBookingsPage = async () => {
-  const myBookings: Booking[] = await bookingService.getMyBookings();
+  const myBookings = await bookingService.getMyBookings();
+  if (myBookings.error) {
+    return <Unauthorize message={myBookings.error.message} />;
+  }
 
   // Group bookings by status
-  const confirmedBookings = myBookings?.filter(b => b.status.toLowerCase() === 'confirmed') || [];
-  const pendingBookings = myBookings?.filter(b => b.status.toLowerCase() === 'pending') || [];
-  const cancelledBookings = myBookings?.filter(b => b.status.toLowerCase() === 'cancelled') || [];
+  const confirmedBookings: Booking[] =
+    myBookings?.filter(
+      (b: Booking) => b.status.toLowerCase() === 'confirmed',
+    ) || [];
+  const pendingBookings: Booking[] =
+    myBookings?.filter((b: Booking) => b.status.toLowerCase() === 'pending') ||
+    [];
+  const cancelledBookings: Booking[] =
+    myBookings?.filter(
+      (b: Booking) => b.status.toLowerCase() === 'cancelled',
+    ) || [];
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -24,15 +35,21 @@ const MyBookingsPage = async () => {
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <h3 className="text-2xl font-bold text-green-600">{confirmedBookings.length}</h3>
+          <h3 className="text-2xl font-bold text-green-600">
+            {confirmedBookings.length}
+          </h3>
           <p className="text-sm text-gray-500">Confirmed</p>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <h3 className="text-2xl font-bold text-yellow-600">{pendingBookings.length}</h3>
+          <h3 className="text-2xl font-bold text-yellow-600">
+            {pendingBookings.length}
+          </h3>
           <p className="text-sm text-gray-500">Pending</p>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <h3 className="text-2xl font-bold text-red-600">{cancelledBookings.length}</h3>
+          <h3 className="text-2xl font-bold text-red-600">
+            {cancelledBookings.length}
+          </h3>
           <p className="text-sm text-gray-500">Cancelled</p>
         </div>
       </div>
@@ -43,8 +60,12 @@ const MyBookingsPage = async () => {
           <div className="flex justify-center mb-4">
             <Ticket className="w-16 h-16 text-gray-300" />
           </div>
-          <h3 className="text-xl font-semibold text-gray-700 mb-2">No bookings yet</h3>
-          <p className="text-gray-500 mb-4">You haven't made any bookings yet.</p>
+          <h3 className="text-xl font-semibold text-gray-700 mb-2">
+            No bookings yet
+          </h3>
+          <p className="text-gray-500 mb-4">
+            You haven't made any bookings yet.
+          </p>
           <Link
             href="/events"
             className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
