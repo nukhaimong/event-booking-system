@@ -83,7 +83,7 @@ const MyBookingsPage = async () => {
                 Confirmed Bookings
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {confirmedBookings.map((booking) => (
+                {confirmedBookings?.map((booking) => (
                   <BookingCard key={booking.id} booking={booking} />
                 ))}
               </div>
@@ -98,7 +98,7 @@ const MyBookingsPage = async () => {
                 Pending Bookings
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {pendingBookings.map((booking) => (
+                {pendingBookings?.map((booking) => (
                   <BookingCard key={booking.id} booking={booking} />
                 ))}
               </div>
@@ -113,7 +113,7 @@ const MyBookingsPage = async () => {
                 Cancelled Bookings
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {cancelledBookings.map((booking) => (
+                {cancelledBookings?.map((booking) => (
                   <BookingCard key={booking.id} booking={booking} />
                 ))}
               </div>
