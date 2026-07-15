@@ -25,9 +25,34 @@ export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
+  // Function to check login status
+  const checkLoginStatus = () => {
+    // Check both cookies and localStorage (in case you're using both)
+    const hasToken =
+      document.cookie.includes('token=') ||
+      localStorage.getItem('token') !== null;
+    setIsLoggedIn(hasToken);
+  };
+
   useEffect(() => {
-    const token = document.cookie.includes('token=');
-    setIsLoggedIn(token);
+    // Check initially
+    checkLoginStatus();
+
+    // Set up a periodic check (every 500ms) - this ensures UI updates
+    // when cookies change via server-side redirects
+    const interval = setInterval(checkLoginStatus, 500);
+
+    // Also listen for storage changes (if using localStorage)
+    window.addEventListener('storage', checkLoginStatus);
+
+    // Listen for custom events (you can dispatch this after login)
+    window.addEventListener('auth-change', checkLoginStatus);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('storage', checkLoginStatus);
+      window.removeEventListener('auth-change', checkLoginStatus);
+    };
   }, []);
 
   useEffect(() => {
@@ -48,9 +73,15 @@ export default function Navbar() {
   const closeMenu = () => setIsMenuOpen(false);
 
   const handleLogout = async () => {
+    // Clear both cookie and localStorage
     document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    localStorage.removeItem('token');
     setIsLoggedIn(false);
     setIsUserMenuOpen(false);
+
+    // Dispatch event to notify other components
+    window.dispatchEvent(new Event('auth-change'));
+
     window.location.href = '/login';
   };
 
@@ -127,7 +158,6 @@ export default function Navbar() {
                       <CalendarPlus className="w-4 h-4" />
                       <span>My Events</span>
                     </Link>
-                    {/* ✅ Added Create Event route */}
                     <Link
                       href="/create-event"
                       onClick={() => setIsUserMenuOpen(false)}
@@ -226,7 +256,6 @@ export default function Navbar() {
                   <CalendarPlus className="w-5 h-5" />
                   <span>My Events</span>
                 </Link>
-                {/* ✅ Added Create Event route for mobile */}
                 <Link
                   href="/create-event"
                   onClick={closeMenu}
