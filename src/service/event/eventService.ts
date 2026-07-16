@@ -73,24 +73,52 @@ export const eventService = {
     }
   },
   getEventById: async (eventId: string) => {
-    const cookieStore = await cookies()
-    const token = cookieStore.get('token')?.value
     try {
       const response = await fetch(`${BASE_API}/events/${eventId}`, {
-        method: 'GET', 
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
         },
-        cache: 'no-store'
-      })
-      const result = await response.json()
+        cache: 'no-store',
+      });
+      const result = await response.json();
       if (!response.ok) {
-        return {error: {message: result.message || "Failed to fetch event"}}
+        return {
+          error: { message: result.message || 'Failed to fetch event' },
+        };
       }
-      return result
+      return result;
     } catch (error) {
-      console.log('Failed to fetch event', error)
+      console.log('Failed to fetch event', error);
     }
-  }
+  },
+  updateEvent: async (eventId: string, formData: FormData) => {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('token')?.value;
+    try {
+      const response = await fetch(`${BASE_API}/events/${eventId}`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+        cache: 'no-store',
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        return {
+          error: { message: result.message || 'Failed to update event' },
+        };
+      }
+      return result;
+    } catch (error) {
+      console.log('Failed to update event: ', error);
+      return {
+        error: {
+          message:
+            error instanceof Error ? error.message : 'Failed to update event',
+        },
+      };
+    }
+  },
 };

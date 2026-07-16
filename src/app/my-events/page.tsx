@@ -1,4 +1,4 @@
-import EventCard from '@/components/event/eventCard';
+import MyEventCard from '@/components/event/myEventCard';
 import Unauthorize from '@/components/ui/unauthorize';
 import { eventService } from '@/service/event/eventService';
 import { Event } from '@/types/types';
@@ -33,7 +33,7 @@ const MyEvents = async () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {events?.map((event) => (
-            <EventCard key={event.id} event={event} />
+            <MyEventCard key={event.id} event={event} />
           ))}
         </div>
       )}
