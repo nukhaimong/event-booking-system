@@ -2,6 +2,7 @@ import MyEventCard from '@/components/event/myEventCard';
 import Unauthorize from '@/components/ui/unauthorize';
 import { eventService } from '@/service/event/eventService';
 import { Event } from '@/types/types';
+import Link from 'next/link';
 
 const MyEvents = async () => {
   const response = await eventService.getMyEvents();
@@ -23,12 +24,12 @@ const MyEvents = async () => {
           <p className="text-gray-500 text-lg">
             You haven't created any events yet.
           </p>
-          <a
+          <Link
             href="/create-event"
             className="inline-block mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
             Create Your First Event
-          </a>
+          </Link>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
