@@ -3,11 +3,7 @@ import { eventService } from '@/service/event/eventService';
 import { Event } from '@/types/types';
 
 const EventPage = async () => {
-  const response: Event[] = await eventService.getEvents();
-  const events: Event[] = response.filter(
-    (event: Event) => new Date(event.starts_at).getTime() > Date.now(),
-  );
-
+  const events: Event[] = await eventService.getEvents();
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8 text-center">Upcoming Events</h1>

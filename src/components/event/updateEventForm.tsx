@@ -152,7 +152,6 @@ export default function UpdateEventForm({ eventId }: UpdateEventFormProps) {
 
         // Format date for datetime-local input
         if (event.starts_at) {
-          const date = new Date(event.starts_at);
           const formattedDate = event.starts_at.replace(' ', 'T').slice(0, 16);
           form.setFieldValue('startsAt', formattedDate);
         }
