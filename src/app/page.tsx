@@ -1,14 +1,6 @@
 // app/page.tsx
 import Link from 'next/link';
-import {
-  Calendar,
-  Ticket,
-  MapPin,
-  Clock,
-  Star,
-  Users,
-  ArrowRight,
-} from 'lucide-react';
+import { Ticket, Clock, Star, ArrowRight } from 'lucide-react';
 import { eventService } from '@/service/event/eventService';
 import { Event } from '@/types/types';
 import EventCard from '@/components/event/eventCard';

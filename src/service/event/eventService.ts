@@ -10,6 +10,7 @@ export const eventService = {
         headers: {
           'Content-Type': 'application/json',
         },
+        cache: 'no-store',
       });
       const result = await response.json();
       if (!response.ok) {
