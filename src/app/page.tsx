@@ -14,9 +14,10 @@ import { Event } from '@/types/types';
 import EventCard from '@/components/event/eventCard';
 
 export default async function HomePage() {
-  const response: Event[] = await eventService.getEvents();
-  const events: Event[] = response.filter(
-    (event: Event) => new Date(event.starts_at).getTime() > Date.now(),
+  const events: Event[] = await eventService.getEvents();
+
+  const upcomingEvents = events.filter(
+    (event) => new Date(event.starts_at).getTime() > Date.now(),
   );
   return (
     <div className="min-h-screen">
@@ -130,7 +131,7 @@ export default async function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {events
+            {upcomingEvents
               .map((event: Event) => <EventCard event={event} />)
               .slice(0, 3)}
           </div>
