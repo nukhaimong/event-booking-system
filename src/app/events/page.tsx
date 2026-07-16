@@ -3,7 +3,10 @@ import { eventService } from '@/service/event/eventService';
 import { Event } from '@/types/types';
 
 const EventPage = async () => {
-  const events: Event[] = await eventService.getEvents();
+  const response: Event[] = await eventService.getEvents();
+  const events: Event[] = response.filter(
+    (event: Event) => new Date(event.starts_at).getTime() > Date.now(),
+  );
 
   return (
     <div className="container mx-auto px-4 py-8">

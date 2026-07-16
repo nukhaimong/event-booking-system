@@ -116,25 +116,6 @@ export default function BookingCard({ booking }: BookingCardProps) {
           >
             View Event
           </Link>
-          {booking.status.toLowerCase() === 'confirmed' && (
-            <Link
-              href={`/bookings/${booking.id}/ticket`}
-              className="flex-1 text-center px-4 py-2 rounded-lg font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
-            >
-              View Ticket
-            </Link>
-          )}
-          {booking.status.toLowerCase() === 'pending' && (
-            <button
-              onClick={() => {
-                // Handle cancel booking
-                console.log('Cancel booking:', booking.id);
-              }}
-              className="flex-1 text-center px-4 py-2 rounded-lg font-medium bg-red-50 text-red-600 hover:bg-red-100 transition-colors"
-            >
-              Cancel Booking
-            </button>
-          )}
         </div>
       </div>
     </div>

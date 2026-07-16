@@ -9,8 +9,15 @@ import {
   Users,
   ArrowRight,
 } from 'lucide-react';
+import { eventService } from '@/service/event/eventService';
+import { Event } from '@/types/types';
+import EventCard from '@/components/event/eventCard';
 
-export default function HomePage() {
+export default async function HomePage() {
+  const response: Event[] = await eventService.getEvents();
+  const events: Event[] = response.filter(
+    (event: Event) => new Date(event.starts_at).getTime() > Date.now(),
+  );
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -123,122 +130,9 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Event Card 1 */}
-            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden group">
-              <div className="h-48 bg-gradient-to-r from-blue-400 to-purple-500 relative">
-                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-gray-700">
-                  🎵 Concert
-                </div>
-              </div>
-              <div className="p-5">
-                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition">
-                  Summer Music Festival
-                </h3>
-                <div className="space-y-2 mt-3">
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Calendar className="w-4 h-4" />
-                    <span>Dec 25, 2025</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <MapPin className="w-4 h-4" />
-                    <span>Madison Square Garden, NYC</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Users className="w-4 h-4" />
-                    <span>150 tickets left</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-                  <span className="text-xl font-bold text-blue-600">
-                    $50.00
-                  </span>
-                  <Link
-                    href="/events/1"
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg text-sm transition"
-                  >
-                    Book Now
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Event Card 2 */}
-            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden group">
-              <div className="h-48 bg-gradient-to-r from-purple-400 to-pink-500 relative">
-                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-gray-700">
-                  🎤 Conference
-                </div>
-              </div>
-              <div className="p-5">
-                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition">
-                  Tech Summit 2025
-                </h3>
-                <div className="space-y-2 mt-3">
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Calendar className="w-4 h-4" />
-                    <span>Jan 15, 2026</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <MapPin className="w-4 h-4" />
-                    <span>Convention Center, SF</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Users className="w-4 h-4" />
-                    <span>80 tickets left</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-                  <span className="text-xl font-bold text-blue-600">
-                    $120.00
-                  </span>
-                  <Link
-                    href="/events/2"
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg text-sm transition"
-                  >
-                    Book Now
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Event Card 3 */}
-            <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden group">
-              <div className="h-48 bg-gradient-to-r from-green-400 to-teal-500 relative">
-                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-gray-700">
-                  🎭 Theater
-                </div>
-              </div>
-              <div className="p-5">
-                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition">
-                  Broadway Night
-                </h3>
-                <div className="space-y-2 mt-3">
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Calendar className="w-4 h-4" />
-                    <span>Feb 10, 2026</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <MapPin className="w-4 h-4" />
-                    <span>Broadway Theater, NYC</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Users className="w-4 h-4" />
-                    <span>45 tickets left</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-                  <span className="text-xl font-bold text-blue-600">
-                    $75.00
-                  </span>
-                  <Link
-                    href="/events/3"
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg text-sm transition"
-                  >
-                    Book Now
-                  </Link>
-                </div>
-              </div>
-            </div>
+            {events
+              .map((event: Event) => <EventCard event={event} />)
+              .slice(0, 3)}
           </div>
         </div>
       </section>
